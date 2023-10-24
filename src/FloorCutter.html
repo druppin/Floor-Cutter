@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Floor Cutter!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="FloorCalc.js"></script>
+  <script src="View.js"></script>
+  <link rel="stylesheet" href="FloorCutter.css">
+</head>
+<body>
+<h1>Dan's Floor Cutting Guide</h1>
+<p>Hi! I wanted to make this quick website so that anyone can access my quick math formulas to
+quickly get a range of numbers to use for starting boards that</p>
+<ul style="list-style-type:none">
+  <li>1) Will not create slivers at the end of a row</li>
+  <li>2) Will give a range of values to cut from so that board may be staggered to your liking</li>
+  <li>3) Will give 2 ranges of values based on the number of boards that can be fit. Generally
+  there is a range with more boards and shorter cuts, and less boards with bigger cuts</li>
+  <li>4) Will give the user flexibility in the accepted range of shortest and longest board
+  cut accepted</li>
+  <li>5) Will automatically subtract the gap size, which can also be specified, to be subtracted from both
+  sides of the length given and a new actual length displayed</li>
+</ul>
+<p>Additionally, I will include a quick floor width guide. This will include some of the same features <br>
+BUT NOT the floor width but only for the last board, because the walls cannot always be trusted <br>just
+  trust the 1/2 mark<br>
+I'd like the user to know how many boards will be used given a floor width input for both
+  <br> a board seam aligning with the center mark of the floor, and a board's center aligning with the floor center mark
+  <br>both will give a measurement to the halfway mark, but the latter should give the measurement to the
+mark of the end of a board. this can be done with width/2-width of board/2 <br>
+the halfway mark should still be make, and I'll include a mark from the halfway mark to the first row to make
+and lock in, so the 2nd row... if you're not a computer scientist <br> I'll also make a measurement off the wall to this mark
+for users if they prefer... Generally both marks should be make to ensure that your measurements were correct, so use
+that part as a sanity check :)</p>
+<!--CHANGE TO CSS GRID-->
+<h2 class="text-center">Input</h2>
+<p class="text-center">All inputs should be in inches</p>
+<form id="input_area">
+  <div class="input-group">
+    <label class="input-group-text" for="total_floor_run">Total Floor Run:</label>
+    <input class="form-control" type="number" id="total_floor_run" min="1" value="0">
+  </div>
+  <div class="input-group">
+    <label class="input-group-text" for="board_run">Board Run:</label>
+    <input class="form-control" type="number" id="board_run" min="1" value="0"></div>
+  <div><label for="min_board_run">Min Board Run:</label>
+    <input type="number" id="min_board_run" min="1" value="0"></div>
+  <div><label for="max_board_run">Max Board Run:</label>
+    <input type="number" id="max_board_run" min="1" value="0"></div>
+
+</form>
+<div class="grid">
+  <h2 class="grid_header" id="title_more_boards"> Boards</h2>
+  <p class="min_boards_label">Min Length</p>
+  <p class="max_boards_label">Max Length</p>
+  <p id="max_more_boards" class="max_boards"></p>
+  <p id="min_more_boards" class="min_boards"></p>
+</div>
+<br>
+<div class="grid">
+  <h2 class="grid_header" id="title_less_boards"> Boards</h2>
+  <p class="min_boards_label">Min Length</p>
+  <p class="max_boards_label">Max Length</p>
+  <p id="max_less_boards" class="max_boards"></p>
+  <p id="min_less_boards" class="min_boards"></p>
+</div>
+</body>
+</html>

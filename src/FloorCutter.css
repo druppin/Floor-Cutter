@@ -1,0 +1,41 @@
+.grid{
+    display: grid;
+    grid-template: repeat(3, 50px)/ 1fr 1fr;
+}
+.grid > *{
+    border: black 1px solid;
+    height: 50px;
+    align-self: center;
+}
+.grid_header{
+    grid-area: 1/1/span 1/-1;
+    text-align: center;
+}
+.max_boards_label{
+    grid-area: 2/1/span 1/span 1;
+    text-align: center;
+}
+.min_boards_label{
+    grid-area: 2/2/span 1/span 1;
+    text-align: center;
+}
+.max_boards{
+    grid-area: 3/1/span 1/span 1;
+    text-align: center;
+}
+.min_boards{
+    grid-area: 3/2/span 1/span 1;
+    text-align: center;
+}
+#input_area{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    flex-grow: 200;
+}
+.input-group{
+    width: 2fr;
+}
