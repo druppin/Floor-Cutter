@@ -1,6 +1,8 @@
 // const Floor = require("FloorCalc");
 let formInputs;
 let myFloor;
+let canvas;
+let canvasLocation;
 
 function GoClickHandler() {
     let errors = document.getElementById("errors");
@@ -52,13 +54,45 @@ function GoClickHandler() {
         console.log(myFloor.get_width_boards())
         console.log(myFloor.get_random_starters())
         console.log("estimated boards needed : " + myFloor.get_board_estimate())
+        console.log(myFloor.get_drawing_input())
+
+
+        let drawing_input = myFloor.get_drawing_input();
+        //IMPORTANT
+        //drawing stuff
+        let scale = 5;
+        let ctx = canvas.getContext('2d');
+        if (canvas.getContext) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let starting_pos = [5,5]
+            for (let i = 0; i < drawing_input.length; i++){
+                let current_pos = [starting_pos[0], starting_pos[1]]
+                ctx.beginPath();
+
+                //Do the ranges
+                for (let j = 0; j<drawing_input[i].ranges.length; j++){
+                    let cut_range =  drawing_input[i].ranges[j];
+                    ctx.fillStyle = "green"
+                    ctx.fillRect(current_pos[0]  + cut_range[0] * scale, current_pos[1],
+                        current_pos[0] + cut_range[1] * scale, drawing_input[i].width * scale)
+                }
+                ctx.lineWidth = "3";
+                ctx.rect(current_pos[0], current_pos[1],
+                    current_pos[0] + drawing_input[i].length * scale, drawing_input[i].width * scale);
+
+                ctx.stroke();
+                starting_pos[1] += drawing_input[i].width * scale;
+            }
+        }
     }
 }
 
 window.onload = () => {
     formInputs = document.getElementsByClassName("input-group")
     // console.log(formInputs)
-    document.getElementById("go").onclick = GoClickHandler
+    document.getElementById("go").onclick = GoClickHandler;
+    canvas = document.getElementById("my_canvas");
+    canvasLocation = canvas.getBoundingClientRect();
 
 
 }
@@ -105,4 +139,9 @@ const makeFloorRanges = (FloorObject) => {
         document.getElementById('board_range_area').append(title, min_cut,max_cut)
     }
 
+}
+const getCanvasLocation = (x,y) => {
+    // Determine the coordinate to draw based on the client (mouse)
+    //   x and y coordinate subtracting the canvas location (left and top)
+    return [x - canvasLocation.left, canvasLocation.top - y];
 }

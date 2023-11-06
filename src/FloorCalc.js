@@ -4,6 +4,7 @@ class Floor {
     #boards = [];
     #check_last_x_length;
     #total_boards = 0;
+    #drawing_input //This will be really scuffed
     /**
      * yep
      * This constructors order of parameters is pretty odd for anyone who will be changing
@@ -137,6 +138,7 @@ class Floor {
      */
     get_random_starters(){
         let lengths = [];
+        this.#drawing_input = [];
         return this.#recursive_get_random_starters(this.get_width_boards().board_number, this.get_range_boards(),
             lengths)
     }
@@ -151,6 +153,14 @@ class Floor {
             board_lengths[0] = this.#get_random_nearest_decimal(board_option.min_cut,
                 board_option.max_cut, this.precision);
             boards = boards - 1
+
+            let specification = {
+                length: board_lengths[0],
+                width: this.board_width,
+                ranges: this.#get_first_ranges(board_options)
+            }
+            this.#drawing_input.push(specification);
+
             return this.#recursive_get_random_starters(boards, board_options, board_lengths);
         }
         let random_board_option = this.#get_random(0, board_options.length - 1)
@@ -208,6 +218,16 @@ class Floor {
             console.log(cut_range)
             console.log(this.#get_cut_range(board_options[0], 12.25))
         }
+
+        //drawing shit
+        let specification = {
+            length: cut,
+            width: this.board_width,
+            ranges: [cut_range]
+        }
+        this.#drawing_input.push(specification);
+
+
         board_lengths.push(cut)
         boards = boards - 1
         return this.#recursive_get_random_starters(boards, board_options, board_lengths);
@@ -307,5 +327,15 @@ class Floor {
             Stringlengths[i] = this.#toFraction(lengths[i], 5)
         }
         return Stringlengths;
+    }
+    #get_first_ranges(boardOptions){
+        let range = []
+        for (let i = 0; i < boardOptions.length; i++){
+            range.push([boardOptions[i].min_cut, boardOptions[i].max_cut])
+        }
+        return range;
+    }
+    get_drawing_input(){
+        return this.#drawing_input;
     }
 }
