@@ -6,65 +6,96 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="FloorCalc.js"></script>
+  <script src="require.js"></script>
   <script src="View.js"></script>
   <link rel="stylesheet" href="FloorCutter.css">
 </head>
 <body>
-<h1>Dan's Floor Cutting Guide</h1>
-<p>Hi! I wanted to make this quick website so that anyone can access my quick math formulas to
+<h1 class="text-center">Dan's Floor Cutting Guide</h1>
+<p class="text-center">Hi! I wanted to make this quick website so that anyone can access my quick math formulas to
 quickly get a range of numbers to use for starting boards that</p>
-<ul style="list-style-type:none">
-  <li>1) Will not create slivers at the end of a row</li>
-  <li>2) Will give a range of values to cut from so that board may be staggered to your liking</li>
-  <li>3) Will give 2 ranges of values based on the number of boards that can be fit. Generally
-  there is a range with more boards and shorter cuts, and less boards with bigger cuts</li>
-  <li>4) Will give the user flexibility in the accepted range of shortest and longest board
-  cut accepted</li>
-  <li>5) Will automatically subtract the gap size, which can also be specified, to be subtracted from both
-  sides of the length given and a new actual length displayed</li>
-</ul>
-<p>Additionally, I will include a quick floor width guide. This will include some of the same features <br>
-BUT NOT the floor width but only for the last board, because the walls cannot always be trusted <br>just
-  trust the 1/2 mark<br>
-I'd like the user to know how many boards will be used given a floor width input for both
-  <br> a board seam aligning with the center mark of the floor, and a board's center aligning with the floor center mark
-  <br>both will give a measurement to the halfway mark, but the latter should give the measurement to the
-mark of the end of a board. this can be done with width/2-width of board/2 <br>
-the halfway mark should still be make, and I'll include a mark from the halfway mark to the first row to make
-and lock in, so the 2nd row... if you're not a computer scientist <br> I'll also make a measurement off the wall to this mark
-for users if they prefer... Generally both marks should be make to ensure that your measurements were correct, so use
-that part as a sanity check :)</p>
+<!--<ul style="list-style-type:none">-->
+<!--  <li>1) Will not create slivers at the end of a row</li>-->
+<!--  <li>2) Will give a range of values to cut from so that board may be staggered to your liking</li>-->
+<!--  <li>3) Will give 2 ranges of values based on the number of boards that can be fit. Generally-->
+<!--  there is a range with more boards and shorter cuts, and less boards with bigger cuts</li>-->
+<!--  <li>4) Will give the user flexibility in the accepted range of shortest and longest board-->
+<!--  cut accepted</li>-->
+<!--  <li>5) Will automatically subtract the gap size, which can also be specified, to be subtracted from both-->
+<!--  sides of the length given and a new actual length displayed</li>-->
+<!--</ul>-->
+<!--<p>Additionally, I will include a quick floor width guide. This will include some of the same features <br>-->
+<!--BUT NOT the floor width but only for the last board, because the walls cannot always be trusted <br>just-->
+<!--  trust the 1/2 mark<br>-->
+<!--I'd like the user to know how many boards will be used given a floor width input for both-->
+<!--  <br> a board seam aligning with the center mark of the floor, and a board's center aligning with the floor center mark-->
+<!--  <br>both will give a measurement to the halfway mark, but the latter should give the measurement to the-->
+<!--mark of the end of a board. this can be done with width/2-width of board/2 <br>-->
+<!--the halfway mark should still be make, and I'll include a mark from the halfway mark to the first row to make-->
+<!--and lock in, so the 2nd row... if you're not a computer scientist <br> I'll also make a measurement off the wall to this mark-->
+<!--for users if they prefer... Generally both marks should be make to ensure that your measurements were correct, so use-->
+<!--that part as a sanity check :)</p>-->
 <!--CHANGE TO CSS GRID-->
 <h2 class="text-center">Input</h2>
 <p class="text-center">All inputs should be in inches</p>
 <form id="input_area">
-  <div class="input-group">
-    <label class="input-group-text" for="total_floor_run">Total Floor Run:</label>
-    <input class="form-control" type="number" id="total_floor_run" min="1" value="0">
+<!--  TOTAL FLOOR RUN-->
+  <div class="input-group needs-validation" id="tfr">
+    <label class="input-group-text" for="total_floor_run">Total Floor <br> Run:</label>
+    <input class="form-control" type="number" id="total_floor_run" min="1" value="0" step="any" required>
   </div>
-  <div class="input-group">
-    <label class="input-group-text" for="board_run">Board Run:</label>
-    <input class="form-control" type="number" id="board_run" min="1" value="0"></div>
-  <div><label for="min_board_run">Min Board Run:</label>
-    <input type="number" id="min_board_run" min="1" value="0"></div>
-  <div><label for="max_board_run">Max Board Run:</label>
-    <input type="number" id="max_board_run" min="1" value="0"></div>
-
+<!--  TOTAL FLOOR WIDTH-->
+  <div class="input-group" id="tfw">
+    <label class="input-group-text" for="total_floor_width">Total Floor <br> Width:</label>
+    <input class="form-control" type="number" id="total_floor_width" min="1" value="0" step="any" required>
+  </div>
+<!--  BOARD RUN-->
+  <div class="input-group" id="br">
+    <label class="input-group-text" for="board_run">Board <br> Run:</label>
+    <input class="form-control" type="number" id="board_run" min="1" value="47.625" step="any" required></div>
+<!--  BOARD WIDTH-->
+  <div class="input-group" id="bw">
+    <label class="input-group-text" for="board_width">Board <br> Width:</label>
+    <input class="form-control" type="number" id="board_width" min="1" value="8" step="any" required></div>
+<!--  MIN RUN-->
+  <div class="input-group" id="mr">
+    <label class="input-group-text" for="min_run">Min <br> Run:</label>
+    <input class="form-control" type="number" id="min_run" min="0" value="8" step="any" required>
+    <p class="text-center">The smallest cut to make a starting board</p>
+  </div>
+<!--SPACER WIDTH-->
+  <div class="input-group" id="spw">
+    <label class="input-group-text" for="spacer_width">Spacer <br> Width:</label>
+    <input class="form-control" type="number" id="spacer_width" min="0" value="0.125" step="any" required>
+    <p class="text-center">the width of the gap from the wall</p>
+  </div>
+  <!--MIN OVERLAP-->
+  <div class="input-group" id="mo">
+    <label class="input-group-text" for="min_overlap">Min <br> Overlap:</label>
+    <input class="form-control" type="number" id="min_overlap" min=".5" value="4" step="any" required>
+    <p class="text-center">the minimum space needed between 2 adjoining board cuts</p>
+  </div>
+  <!--MIN OFFSET-->
+  <div class="input-group" id="moff">
+    <label class="input-group-text" for="min_offset">Min <br> Offset:</label>
+    <input class="form-control" type="number" id="min_offset" min="0" value=".25" step="any" required>
+    <p class="text-center">the length +- from a board seam where another seam may not lie within</p>
+  </div>
+  <!--PRECISION-->
+  <div class="input-group" id="pre">
+    <label class="input-group-text" for="precision">Precision:</label>
+    <input class="form-control" type="number" id="precision" min="0" value=".25" step="any" required>
+    <p class="text-center">the fractional value to round to</p>
+  </div>
+  <!--CHECK LINEUP-->
+  <div class="input-group" id="cl">
+    <label class="input-group-text" for="check_lineup">Check lineup:</label>
+    <input class="form-control" type="number" id="check_lineup" min="1" value="4" required>
+    <p class="text-center">The amount of boards to check back on for board joints lining up</p>
+  </div>
+  <button type="button" class="btn btn-success" id="go">GO</button>
 </form>
-<div class="grid">
-  <h2 class="grid_header" id="title_more_boards"> Boards</h2>
-  <p class="min_boards_label">Min Length</p>
-  <p class="max_boards_label">Max Length</p>
-  <p id="max_more_boards" class="max_boards"></p>
-  <p id="min_more_boards" class="min_boards"></p>
-</div>
-<br>
-<div class="grid">
-  <h2 class="grid_header" id="title_less_boards"> Boards</h2>
-  <p class="min_boards_label">Min Length</p>
-  <p class="max_boards_label">Max Length</p>
-  <p id="max_less_boards" class="max_boards"></p>
-  <p id="min_less_boards" class="min_boards"></p>
-</div>
+<p id="errors"></p>
+<div id="board_range_area"></div>
 </body>
 </html>
