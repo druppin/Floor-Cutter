@@ -52,9 +52,10 @@ function GoClickHandler() {
         makeFloorRanges(myFloor);
         console.log(myFloor.get_range_boards());
         console.log(myFloor.get_width_boards())
-        console.log(myFloor.get_random_starters())
-        console.log("estimated boards needed : " + myFloor.get_board_estimate())
-        console.log(myFloor.get_drawing_input())
+        // console.log(myFloor.get_random_starters())
+        // console.log("estimated boards needed : " + myFloor.get_board_estimate())
+        // console.log(myFloor.get_drawing_input())
+        console.log(myFloor.simplifyRanges([[1,2],[2,3],[3,4],[1,6],[2,3],[5,11],[50,60],[12,12]]))
 
 
         let drawing_input = myFloor.get_drawing_input();
