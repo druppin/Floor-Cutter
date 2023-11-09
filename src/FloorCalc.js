@@ -353,6 +353,13 @@ class Floor {
         return x[0] <= a[0] && a[1] >= x[1] && a[0] <= x[1];
     }
 
+    /**
+     * This takes a number of ranges in and will simplify them if possible into larger ranges
+     * ranges must be in the form of [smaller, bigger]
+     * ranges cannot be [a, a] where "a" is a real value
+     * @param rangeList 2D array of ranges
+     * @returns {*} 2D array of simplified ranges
+     */
     simplifyRanges(rangeList) {
         for (let i = 0; i < rangeList.length; i++) {
             for (let j = i + 1; j < rangeList.length; j++) {
@@ -383,5 +390,46 @@ class Floor {
             }
         }
         return rangeList;
+    }
+
+    /**
+     * Return ranges that are outside the invalid ranges but still in the valid ranges
+     * @param validRanges
+     * @param invalidRanges
+     * @returns {*} the new valid ranges
+     */
+    inclusiveRange(validRanges, invalidRanges){
+        for (let v = 0; v < validRanges.length; v++){
+            for (let b = 0; b < invalidRanges.length; b++){
+                let B = invalidRanges[b];
+                let V = validRanges[v];
+
+                if(V[0] >= V[1] || B[0] >= B[1]){
+                    throw new Error("Cannot accept ranges which start at a greater number and go to a lesser number, or the same number\nvalid range= "
+                        + V + "\ninvalidRange(just the current range, may be valid)= " + B)
+                }
+
+                if(B[0] <= V[0] && B[1] > V[0] && B[1] < V[1]){ //CASE 1
+                    validRanges[v][0] = B[1];
+                } else if(V[0] < B[0] && V[1] > B[1]){ //CASE 2
+                    validRanges.push([B[1], V[1]]);
+                    validRanges[v][1] = B[0];
+                } else if(B[0] <= V[0] && B[1] >= V[1]){ //CASE 3
+                    validRanges.splice(v, 1);
+                    v--;//we just deleted the current entry so this makes sense
+                    break;
+                } else if(V[0] < B[0] && B[1] >= V[1]){ //CASE 4
+                    validRanges[v][1] = B[0];
+                }
+            }
+        }
+        return validRanges;
+    }
+
+    #getLastPossibleEntries(array, last){
+        if(last > array.length){
+            last = array.length;
+        }
+        return array.slice(length - last, array.length);
     }
 }
